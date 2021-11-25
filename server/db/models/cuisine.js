@@ -8,3 +8,5 @@ const Cuisine = db.define('cuisine', {
     allowNull: false
   }
 })
+
+module.exports = Cuisine
