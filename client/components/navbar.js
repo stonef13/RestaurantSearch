@@ -6,7 +6,15 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>BOILERMAKER</h1>
+    <h1>RESTAURANT SEARCH</h1>
+    <form>
+      <label htmlFor="name">name</label>
+      <input type="text" id="name" name="name" />
+      <label htmlFor="rating" id="rating" name="rating">
+        rating
+      </label>
+      <input type="radio" id="radio" />
+    </form>
     <nav>
       {isLoggedIn ? (
         <div>
