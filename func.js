@@ -5,14 +5,13 @@ const restaurants = require('./funcData')
 
 function restaurantSearch(name, rating, distance, price, cuisine) {
   let searchResults = []
-  //exact match for name
   if (name) {
     if (typeof name !== 'string') {
       console.error('Name is not a String!')
       return
     }
     for (let i = 0; i < restaurants.length; i++) {
-      if (restaurants[i].name.includes(name)) {
+      if (restaurants[i].name.toLowerCase().includes(name.toLowerCase())) {
         if (searchResults.includes(restaurants[i])) {
           continue
         } else {
@@ -22,13 +21,13 @@ function restaurantSearch(name, rating, distance, price, cuisine) {
     }
   }
 
-  if (rating && !name) {
+  if (rating) {
     if (typeof rating !== 'number') {
       console.error('rating is not an Integer!')
       return
     }
     for (let i = 0; i < restaurants.length; i++) {
-      if (restaurants[i].customer_rating >= rating) {
+      if (restaurants[i].customerRating >= rating) {
         if (searchResults.includes(restaurants[i])) {
           continue
         } else {
@@ -38,7 +37,7 @@ function restaurantSearch(name, rating, distance, price, cuisine) {
     }
   }
 
-  if (distance && !name) {
+  if (distance) {
     if (typeof distance !== 'number') {
       console.error('distance is not an Integer!')
       return
@@ -54,7 +53,7 @@ function restaurantSearch(name, rating, distance, price, cuisine) {
     }
   }
 
-  if (price && !name) {
+  if (price) {
     if (typeof price !== 'number') {
       console.error('Price is not an Integer!')
       return
@@ -70,13 +69,17 @@ function restaurantSearch(name, rating, distance, price, cuisine) {
     }
   }
 
-  if (cuisine && !name) {
+  if (cuisine) {
     if (typeof cuisine !== 'string') {
       console.error('Name is not a String!')
       return
     }
     for (let i = 0; i < restaurants.length; i++) {
-      if (restaurants[i].cuisine.name.includes(cuisine)) {
+      if (
+        restaurants[i].cuisine.name
+          .toLowerCase()
+          .includes(cuisine.toLowerCase())
+      ) {
         if (searchResults.includes(restaurants[i])) {
           continue
         } else {
@@ -89,21 +92,12 @@ function restaurantSearch(name, rating, distance, price, cuisine) {
     searchResults = sortRestaurants(searchResults)
   }
 
-  //STILL NEED CUISINES BUT WAIT FOR POSTGRES
-
-  //SORT METHOD TO SORT RESTAURANTS BY DISTANCE
-  console.log('SEARCH RESULTS AFTER SORT', searchResults)
-  // return searchResults
+  return searchResults
 }
-
-// PARAMS: (name, rating, distance, price, cuisine)
-
-console.log(restaurantSearch('St', null, 3, null, null))
-
-//SORT METHOD TO SORT RESTAURANTS BY DISTANCE
 
 function sortRestaurants(arrayOfRestaurants) {
   arrayOfRestaurants.sort((a, b) => a.distance - b.distance)
+
   arrayOfRestaurants = arrayOfRestaurants.slice(0, 5)
 
   if (
@@ -127,5 +121,8 @@ function sortRestaurants(arrayOfRestaurants) {
 
   return arrayOfRestaurants
 }
+
+// restaurauntSearch(name, rating, distance, price, cuisine)
+console.log(restaurantSearch(null, null, null, null, null))
 
 module.exports = restaurantSearch
